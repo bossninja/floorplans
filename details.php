@@ -19,7 +19,7 @@ class Module_Floorplans extends Module {
 			'menu'	  => TRUE,
                         'sections' => array(                            
 			    'floorplans' => array(
-                                'name' => 'floorplans',
+                                'name' => 'floorplans_section_title',
                                 'uri' => 'admin/floorplans/list_floorplans',
                                 'shortcuts' => array(
                                     array(
@@ -28,7 +28,7 @@ class Module_Floorplans extends Module {
                                        'class' => 'add'
                                     ),
                                     array(
-                                       'name' => 'list_floorplans_title',
+                                       'name' => 'list_floorplan_title',
                                        'uri' => 'admin/floorplans/list_floorplans',
                                        'class' => 'add'
                                     )
