@@ -25,9 +25,9 @@
                                 <td class="collapse"><?php echo $plan->purchase_price; ?></td>                                
                                 <td><?php echo $plan->status; ?></td>
                                 <td>
-                                        <?php echo anchor('admin/floorplan/preview/' . $plan->floorplan_id, lang($plan->status == 'enabled' ? 'global:view' : 'global:preview'), 'rel="modal-large" class="iframe btn green" target="_blank"'); ?>
-                                        <?php echo anchor('admin/floorplan/edit/' . $plan->floorplan_id, lang('global:edit'), 'class="btn orange edit"'); ?>
-                                        <?php echo anchor('admin/floorplan/delete/' . $plan->floorplan_id, lang('global:delete'), array('class'=>'confirm btn red delete')); ?>
+                                        <?php echo anchor('admin/floorplans/preview/' . $plan->floorplan_id, lang($plan->status == 'enabled' ? 'global:view' : 'global:preview'), 'rel="modal-large" class="iframe btn green" target="_blank"'); ?>
+                                        <?php echo anchor('admin/floorplans/edit/' . $plan->floorplan_id, lang('global:edit'), 'class="btn orange edit"'); ?>
+                                        <?php echo anchor('admin/floorplans/delete/' . $plan->floorplan_id, lang('global:delete'), array('class'=>'confirm btn red delete')); ?>
                                 </td>
                         </tr>
                     <?php endforeach; ?>

@@ -8,3 +8,8 @@ $lang['list_floorplan_title']     = 'List all plans';
 $lang['list_hasnt_plans'] = 'There are no plans at the moment.';
 $lang['list_title']       = 'List Plans';
 $lang['floorplan_add_success'] = 'Plan added with success.';
+$lang['floorplan_updated_success'] = 'Plan updated with success.';
+$lang['floorplan_deleted_success'] = 'Plan deleted with success.';
+
+$lang['floorplan_current_images'] = 'Current Images (drag and drop to sort, click to edit)';
+$lang['floorplan_preview_label']  = 'Folder Images Preview';
