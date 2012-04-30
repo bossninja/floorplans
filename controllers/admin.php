@@ -130,6 +130,8 @@ class Admin extends Admin_Controller {
 
                     if($floorplan_id)
                     {
+                        $this->floorplan_images_m->unset_old_image_files($id);
+                        $this->floorplan_images_m->set_new_image_files($id);
                         $this->session->set_flashdata('success', $this->lang->line('floorplan_updated_success'));
                         redirect('admin/' . $this->module);
                     }
@@ -177,6 +179,39 @@ class Admin extends Admin_Controller {
                 redirect('admin/' . $this->module);
             }
         }
+        
+        /**
+	 * Sort images in an existing gallery
+	 *
+	 * @access public
+	 */
+	public function ajax_update_order()
+	{
+		$ids = explode(',', $this->input->post('order'));
+
+		$i = 1;
+		foreach ($ids as $id)
+		{
+			$this->floorplan_images_m->update($id, array(
+				'order' => $i
+			));                        
+			++$i;
+		}
+	}
+        
+        public function ajax_select_folder($folder_id)
+	{
+		$folder = $this->file_folders_m->get($folder_id);
+		
+		if (isset($folder->id))
+		{
+			$folder->images = $this->floorplan_images_m->get_images_by_file_folder($folder->id);
+			
+			return $this->template->build_json($folder);
+		}
+
+		echo FALSE;
+	}
         
         /**
 	 * Callback method that checks the file folder of the gallery

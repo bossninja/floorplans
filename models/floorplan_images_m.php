@@ -84,6 +84,88 @@ class Floorplan_images_m extends MY_Model
 
             return TRUE;
     }
+    
+    /**
+	 * Preview images from folder
+	 *
+	 * @author Jerel Unruh - PyroCMS Dev Team
+	 * @access public
+	 * @param int $id The ID of the folder
+	 * @param array $options Options
+	 * @return mixed
+	 */
+	public function get_images_by_file_folder($id, $options = array())
+	{
+
+		if (isset($options['offset']))
+		{
+			$this->db->limit($options['offset']);
+		}
+
+		if (isset($options['limit']))
+		{
+			$this->db->limit($options['limit']);
+		}
+
+		// Grand finale, do what you gotta do!!
+		$images = $this->db
+				->select('files.*')
+				->where('folder_id', $id)
+				->where('files.type', 'i')
+				->get('files')
+				->result();
+
+		return $images;
+	}
+        
+        
+        public function unset_old_image_files($gallery_id = 0)
+	{
+		$not_in = array();
+
+		// Get all image from folder of my gallery...
+		$images = $this->db
+			->select('files.id')
+			->from('files')
+			->join('floorplan', 'floorplan.folder_id = files.folder_id')
+			->where('files.type', 'i')
+			->where('floorplan.floorplan_id', $gallery_id)
+			->get()
+			->result();
+                
+		if (count($images) > 0)
+		{
+			foreach ($images AS $item)
+			{
+				$not_in[] = $item->id;
+			}
+		
+			$this->db
+				// Select fields on gallery images table
+				->select('floorplan_images.id')
+				->from('floorplan_images')
+				// Set my gallery by id
+				->where('floorplan.floorplan_id', $gallery_id)
+				// Filter images from my gallery
+				->join('floorplan', 'floorplan.floorplan_id = floorplan_images.floorplan_id')
+				// Get all images that are no longer in a gallery
+				->where_not_in('file_id', $not_in);
+	
+			// Already updated, nothing to do here..
+			if ( ! $old_images = $this->db->get()->result())
+			{
+				return FALSE;
+			}
+
+			// Remove missing files images
+			foreach ($old_images as $old_image)
+			{
+				parent::delete($old_image->id);
+			}
+		}
+
+		return TRUE;
+	}
 }
 
 ?>

@@ -51,19 +51,21 @@ class Module_Floorplans extends Module {
              `purchase_price` float(10,2) DEFAULT NULL,
              `features` text COLLATE utf8_unicode_ci,
              `status` varchar(45) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'enabled',
+             `folder_id` int(10) DEFAULT NULL,
              PRIMARY KEY (`floorplan_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
+           
 
             "CREATE TABLE `" . $this->db->dbprefix('floorplan_images') . "` (
-             `floorplan_images_id` int(11) NOT NULL AUTO_INCREMENT,
+             `id` int(11) NOT NULL AUTO_INCREMENT,
              `floorplan_id` int(10) NOT NULL,
-             `image_path` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+             `file_id` int(10) NOT NULL,
              `order` int(11) DEFAULT NULL,
-             PRIMARY KEY (`floorplan_images_id`),
+             PRIMARY KEY (`id`),  
              KEY `fk_default_floorplan_images_1` (`floorplan_id`),
              CONSTRAINT `fk_default_floorplan_images_1` FOREIGN KEY (`floorplan_id`) REFERENCES `" . $this->db->dbprefix('floorplan') . "` (`floorplan_id`) ON DELETE CASCADE ON UPDATE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";    
-                
+                            
             return TRUE;
 
 	}

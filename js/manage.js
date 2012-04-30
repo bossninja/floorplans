@@ -15,7 +15,7 @@ jQuery(function($) {
 			});
 			order = order.join(',');
 
-			$.post(SITE_URL + 'admin/galleries/ajax_update_order', { order: order });
+			$.post(SITE_URL + 'admin/floorplans/ajax_update_order', { order: order });
 		}
 
 	}).disableSelection();
@@ -55,7 +55,7 @@ jQuery(function($) {
 	// update the folder images preview when folder selection changes
 	$('select#folder_id').change(function(){
 
-		$.get(SITE_URL + 'admin/galleries/ajax_select_folder/' + $(this).val(), function(data) {
+		$.get(SITE_URL + 'admin/floorplans/ajax_select_folder/' + $(this).val(), function(data) {
 
 			if (data) {
 				$('input[name=title]').val(data.name);
