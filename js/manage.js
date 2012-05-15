@@ -2,23 +2,6 @@ jQuery(function($) {
 	
 	// generate a slug when the user types a title in
 	pyro.generate_slug('input[name="title"]', 'input[name="slug"]');
-		
-	$('.images-manage ul#gallery_images_list').sortable({
-		handle: 'img',
-		start: function(event, ui) {
-			ui.helper.find('a').unbind('click').die('click');
-		},
-		update: function() {
-			order = new Array();
-			$('li', this).each(function(){
-				order.push( $(this).find('input[name="action_to[]"]').val() );
-			});
-			order = order.join(',');
-
-			$.post(SITE_URL + 'admin/floorplans/ajax_update_order', { order: order });
-		}
-
-	}).disableSelection();
 	
 	// edit images with ajax
 	$(document).bind('cbox_complete',function(){
@@ -96,4 +79,42 @@ jQuery(function($) {
 
 		}, 'json');
 	});
+
+	// Add Features
+	$('tfoot.features .add').click(function(e) {
+		e.preventDefault();
+		
+		var index = $('tr.feature.new').length + 1;
+		
+		$('<tr id="newfeature_'+index+'" class="feature new">\
+			<td class="name"><div class="input type-text"><input type="text" name="newfeatures['+index+'][name]" value=""/></div></td>\
+			<td class="actions">\
+				<input type="hidden" name="newfeatures['+index+'][delete]" value="0"/>\
+				<button class="btn red delete"><span>Delete</span></button>\
+			</td>\
+		</tr>').appendTo($('tbody.features'));		
+	});
+
+	// Delete Features
+	$('tbody.features .delete').live('click',function(e) {
+
+		e.preventDefault();
+
+		var item = $(this).parents('tr');
+
+		if(!item.hasClass('deleted')) {		
+			item.addClass('deleted');
+			$(this).removeClass('red');
+			$(this).addClass('gray');
+			$(this).find('span').text('Undelete');
+			item.find('input[name*="[delete]"]').val(1);
+		} else {
+			item.removeClass('deleted');
+			$(this).removeClass('gray');
+			$(this).addClass('red');
+			$(this).find('span').text('Delete');
+			item.find('input[name*="[delete]"]').val(0);
+		}
+	});
+
 });

@@ -13,3 +13,8 @@ $lang['floorplan_deleted_success'] = 'Plan deleted with success.';
 
 $lang['floorplan_current_images'] = 'Current Images (drag and drop to sort, click to edit)';
 $lang['floorplan_preview_label']  = 'Folder Images Preview';
+
+$lang['floorplan_details_title'] = 'Floorplan Details';
+$lang['floorplan_images_title'] = 'Floorplan Images';
+
+$lang['floorplan_save_details_message'] = 'You need save the details before upload images';

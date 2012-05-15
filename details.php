@@ -2,9 +2,9 @@
 
 class Module_Floorplans extends Module {
     
-        public $version = '0.1';
+    public $version = '0.1';
     
-        public function info()
+    public function info()
 	{
 		$info = array(
 			'name' => array(
@@ -16,58 +16,53 @@ class Module_Floorplans extends Module {
 			'frontend' => FALSE,
 			'backend'  => TRUE,
 			'skip_xss' => TRUE,
-			'menu'	  => TRUE,
-                        'sections' => array(                            
-			    'floorplans' => array(
-                                'name' => 'floorplans_section_title',
-                                'uri' => 'admin/floorplans/list_floorplans',
-                                'shortcuts' => array(
-                                    array(
-                                       'name' => 'new_floorplan_title',
-                                       'uri' => 'admin/floorplans/create',
-                                       'class' => 'add'
-                                    ),
-                                    array(
-                                       'name' => 'list_floorplan_title',
-                                       'uri' => 'admin/floorplans/list_floorplans',
-                                       'class' => 'add'
-                                    )
+			'menu'	   => TRUE,
+            'sections' => array(                            
+		        'floorplans' => array(
+                            'name' => 'floorplans_section_title',
+                            'uri' => 'admin/floorplans/list_floorplans',
+                            'shortcuts' => array(
+                                array(
+                                   'name' => 'new_floorplan_title',
+                                   'uri' => 'admin/floorplans/create',
+                                   'class' => 'add'
+                                ),
+                                array(
+                                   'name' => 'list_floorplan_title',
+                                   'uri' => 'admin/floorplans/list_floorplans',
+                                   'class' => 'add'
                                 )
-                            ),
-                            
-                        )
+                            )
+                )//floorplans key
+            )// sections key
 		);
 
-                return $info;
+        return $info;
 	}
     
-        public function install()
+    public function install()
 	{
-
             $this->db->query("CREATE TABLE IF NOT EXISTS `" . $this->db->dbprefix('floorplan') . "` (
-             `floorplan_id` int(11) NOT NULL AUTO_INCREMENT,
-             `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-             `lease_price` float(10,2) DEFAULT NULL,
-             `purchase_price` float(10,2) DEFAULT NULL,
-             `features` text COLLATE utf8_unicode_ci,
-             `status` varchar(45) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'enabled',
-             `folder_id` int(10) DEFAULT NULL,
+              `floorplan_id` int(11) NOT NULL AUTO_INCREMENT,
+              `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+              `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+              `lease_price` float(10,2) DEFAULT NULL,
+              `purchase_price` float(10,2) DEFAULT NULL,
+              `status` varchar(45) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'enabled',
+              `folder_id` int(10) DEFAULT NULL,
              PRIMARY KEY (`floorplan_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
            
+            $this->db->query("CREATE TABLE `" . $this->db->dbprefix('floorplan_features') . "` (
+              `floorplan_feature_id` int(11) NOT NULL AUTO_INCREMENT,
+              `floorplan_id` int(10) NOT NULL,
+              `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+              PRIMARY KEY (`floorplan_feature_id`),
+              KEY `fk_default_floorplan_features_1` (`floorplan_id`),
+              CONSTRAINT `fk_default_floorplan_features_1` FOREIGN KEY (`floorplan_id`) REFERENCES `" . $this->db->dbprefix('floorplan') . "` (`floorplan_id`) ON DELETE CASCADE ON UPDATE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
 
-            "CREATE TABLE `" . $this->db->dbprefix('floorplan_images') . "` (
-             `id` int(11) NOT NULL AUTO_INCREMENT,
-             `floorplan_id` int(10) NOT NULL,
-             `file_id` int(10) NOT NULL,
-             `order` int(11) DEFAULT NULL,
-             PRIMARY KEY (`id`),  
-             KEY `fk_default_floorplan_images_1` (`floorplan_id`),
-             CONSTRAINT `fk_default_floorplan_images_1` FOREIGN KEY (`floorplan_id`) REFERENCES `" . $this->db->dbprefix('floorplan') . "` (`floorplan_id`) ON DELETE CASCADE ON UPDATE CASCADE
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";    
-                            
             return TRUE;
-
 	}
 
 	public function uninstall()
@@ -90,5 +85,4 @@ class Module_Floorplans extends Module {
 	}
     
 }
-
 ?>
