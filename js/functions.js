@@ -1,7 +1,5 @@
 jQuery(function($){
 
-	
-
 	// Bind an event to window.onhashchange that, when the hash changes, gets the
 	// hash and adds reload contents
 	$(window).hashchange(function(){
@@ -23,7 +21,7 @@ jQuery(function($){
 		if(FOLDER_ID != '') {
 			//get images from folder
 			$.get(SITE_URL + 'admin/floorplans/folders/contents/' + FOLDER_ID, '', function(data){
-
+				alert(data.content);
 				if (data.status == 'success')
 				{
 					data.navigation && $('#files-browser-nav').html(data.navigation);
@@ -225,28 +223,9 @@ jQuery(function($){
 		$.colorbox.close();
 	});
 	
-	/*
-	$('a[rel="colorbox"]').livequery(function(){
-		$(this).colorbox({
-			maxWidth	: '80%',
-			maxHeight	: '80%'
-		});
-	});
-	*/
 	$('#grid').livequery(function(){
-		if ($.cookie('file_view') != 'grid')
-		{
-			$('#grid').hide();
-		}
-		else
-		{
-			$('#list').hide();
-			$('#grid').fadeIn();
-			$('a.active-view').removeClass('active-view');
-			$("a[title='grid']").addClass('active-view');
-		}
+		$('#grid').fadeIn();		
 	});
-
 
 	$('a.toggle-view').livequery('click', function(e){
 		e.preventDefault();
@@ -258,15 +237,8 @@ jQuery(function($){
 
 		$('a.active-view').removeClass('active-view');
 		$(this).addClass('active-view');
-
-		if (view == 'grid')
-		{
-			hide_view = 'list';
-		}
-		else
-		{
-			hide_view = 'grid';
-		}
+		
+		view = 'grid';
 
 		$('#'+hide_view).fadeOut(50, function() {
 			$('#'+view).fadeIn(500);   
