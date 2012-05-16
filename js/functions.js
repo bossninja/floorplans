@@ -21,7 +21,7 @@ jQuery(function($){
 		if(FOLDER_ID != '') {
 			//get images from folder
 			$.get(SITE_URL + 'admin/floorplans/folders/contents/' + FOLDER_ID, '', function(data){
-				alert(data.content);
+				
 				if (data.status == 'success')
 				{
 					data.navigation && $('#files-browser-nav').html(data.navigation);
