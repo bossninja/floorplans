@@ -5,3 +5,7 @@ tr.deleted td{
 .image-upload-form {
 	width: 100%;
 }
+
+.form_inputs .input-feature > input {
+	min-width: 510px !important;
+}
