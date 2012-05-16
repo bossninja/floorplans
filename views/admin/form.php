@@ -76,7 +76,7 @@
                                     foreach ($plan_features as $key => $feature):                                    
                             ?>
                                         <tr class="feature">
-                                            <td class="name"><div class="input type-text"><input type="text" name="features[<?php echo $feature->floorplan_feature_id; ?>][name]" value="<?php echo $feature->name; ?>"/></div></td>                        
+                                            <td class="name"><div class="input type-text input-feature"><input type="text" name="features[<?php echo $feature->floorplan_feature_id; ?>][name]" value="<?php echo $feature->name; ?>"/></div></td>                        
                                             <td class="actions">
                                                 <input type="hidden" name="features[<?php echo $feature->floorplan_feature_id; ?>][delete]" value="0"/>
                                                 <button class="btn red delete"><span>Delete</span></button>

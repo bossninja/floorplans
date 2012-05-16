@@ -1,17 +1,13 @@
 
 <?php echo form_open('admin/files/action');?>
 
-	<div id="files-toolbar">
-		<ul>
-			<?php if (group_has_role('files', 'edit_file')): ?>
-				<li class="buttons buttons-small">
+	<div class="buttons float-left padding-top">
+			<?php if (group_has_role('files', 'edit_file')): ?>		
 					<?php echo form_hidden('folder_id', $folder->id); ?>
-					<a href="<?php echo site_url('admin/files/upload/'.$folder->id);?>" class="button upload open-files-uploader">
+					<a href="<?php echo site_url('admin/files/upload/'.$folder->id);?>" class="btn gray button upload open-files-uploader">
 						<?php echo lang('files.upload_title'); ?>
-					</a>
-				</li>
-			<?php endif; ?>
-		</ul>
+					</a>		
+			<?php endif; ?>		
 	</div>
 
 	<?php if ($files): ?>
@@ -22,12 +18,12 @@
 	        <ul class="grid clearfix" id="gallery_images_list">
 	        <?php foreach($files as $file): ?>
 	            <li>
-	                <div class="actions">
-	                	<?php echo form_checkbox('action_to[]', $file->id); ?>				
-	                </div>		            
 		            <a href="<?php echo site_url('admin/files/edit/'.$file->id); ?>" class="modal">
 		                <?php echo img(array('src' => site_url('files/thumb/'.$file->id), 'alt' => $file->name, 'title' => 'Title: ' . $file->name . ' -- Caption: ' . $file->description)); ?>		                
-		            </a>		            
+		            </a>
+		            <div class="actions">
+	                	<?php echo form_checkbox('action_to[]', $file->id); ?>				
+	                </div>
 	            </li>
 	        <?php endforeach; ?>
 	        </ul>
